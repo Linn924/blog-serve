@@ -21,7 +21,7 @@ user.get('/users',async ctx => {
     const [res] = await connection.query(sql)
     connection.end((err) => console.log(err))
 
-    if (res.length > 0) {
+    if (res.length > 0 && !res[0].status) {
         ctx.body = {
             code:200,
             tips:'登录成功',
@@ -31,12 +31,16 @@ user.get('/users',async ctx => {
             avatar:res[0].avatar,
             token:jwt.sign(userdata, secret)
         }
+    } else if(res.length > 0 && res[0].status){
+        ctx.body = {
+            code:201,
+            tips:'您的账号已被冻结，如有疑问，请联系博主！',
+        }
     } else {
         ctx.body = {
             code:400,
             tips:'登录失败',
         }
-        
     }
 })
 

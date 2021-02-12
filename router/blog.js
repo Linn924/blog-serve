@@ -243,20 +243,19 @@ blog.post('/sorts', async ctx => {
     const name = ctx.request.body.sort_name.trim()
 
     const connection = await Mysql.createConnection(mysql)
-    const [res] = await connection.query(`SELECT sort_name FROM blog_sort`)
+    const [res] = await connection.query(`SELECT * FROM blog_sort WHERE sort_name='${name}'`)
     connection.end((err) => console.log(err))
 
-    res.some(item => {
-        if (item.sort_name === name) {
-            ctx.body = {
-                code:201,
-                tips :'分类重复'
-            } 
-            return true
-        }
-    })
+    let flag = false
+    if(res.length) flag = true
+    else flag = false
 
-    if (code != 201) {
+    if(flag){
+        ctx.body = {
+            code:201,
+            tips :'分类重复'
+        } 
+    }else{
         const connection = await Mysql.createConnection(mysql)
         const sql2 = `INSERT INTO blog_sort (sort_name) VALUE ('${name}')`
         const [res2] = await connection.query(sql2)
@@ -281,20 +280,19 @@ blog.post('/labels', async ctx => {
     const name = ctx.request.body.technology_name.trim()
 
     const connection = await Mysql.createConnection(mysql)
-    const [res] = await connection.query(`SELECT technology_name FROM blog_technology`)
+    const [res] = await connection.query(`SELECT * FROM blog_technology WHERE technology_name='${name}'`)
     connection.end((err) => console.log(err))
 
-    res.some(item => {
-        if (item.technology_name === name) {
-            ctx.body = {
-                code:201,
-                tips :'标签重复'
-            } 
-            return true
-        }
-    })
+    let flag = false
+    if(res.length) flag = true
+    else flag = false
 
-    if (code != 201) {
+    if(flag){
+        ctx.body = {
+            code:201,
+            tips :'标签重复'
+        } 
+    }else{
         const connection = await Mysql.createConnection(mysql)
         const sql2 = `INSERT INTO blog_technology (technology_name) VALUE ('${name}')`
         const [res2] = await connection.query(sql2)

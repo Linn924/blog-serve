@@ -52,13 +52,15 @@
     const user = require("./router/user.js")
     const blog = require("./router/blog.js")
     const comment = require("./router/comment.js")
+    const admin = require("./router/admin.js")
     
     app.use(user.routes())
     app.use(blog.routes())
     app.use(comment.routes())
+    app.use(admin.routes())
     app.use(router.routes())
 
-    app.listen(0926, () => {
+    app.listen(8888, () => {
         console.log('serve is running')
     })
 
