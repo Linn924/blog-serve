@@ -21,7 +21,7 @@ user.get('/users',async ctx => {
     const [res] = await connection.query(sql)
     connection.end((err) => console.log(err))
 
-    if (res.length > 0 && !res[0].status) {
+    if (res.length && res[0].status == 'false') {
         ctx.body = {
             code:200,
             tips:'登录成功',
@@ -31,7 +31,7 @@ user.get('/users',async ctx => {
             avatar:res[0].avatar,
             token:jwt.sign(userdata, secret)
         }
-    } else if(res.length > 0 && res[0].status){
+    } else if(res.length && res[0].status == 'true'){
         ctx.body = {
             code:201,
             tips:'您的账号已被冻结，如有疑问，请联系博主！',
@@ -163,7 +163,7 @@ user.get('/usersByAdmin',async ctx => {
 })
 
 //注册
-user.post('/users',async ctx => {
+user.post('/register',async ctx => {
     const username = ctx.request.body.username.trim()
     const password = Md5(ctx.request.body.password.trim())
     const email = ctx.request.body.email.trim()

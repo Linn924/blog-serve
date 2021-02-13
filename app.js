@@ -20,7 +20,7 @@
         const token = ctx.headers.authorization
         const method = ctx.request.method
         const url = method !== 'DELETE' ? ctx.request.url : ctx.request.url.split('?')[0]
-        const one = method === 'GET' || url === '/password'
+        const one = method === 'GET' || url === '/password' || url === '/register'
         const two = method !== 'GET' && (url === '/comments' || url === '/blogs' || url === '/sorts' || url === '/labels' 
                     || url === '/images' || url === '/usersByAdmin' || url === '/users' || url === '/replyComment' 
                     || url === '/blogsPageview')
