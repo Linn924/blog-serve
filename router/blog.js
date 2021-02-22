@@ -134,7 +134,7 @@ blog.get('/recentBlogs', async ctx => {
 
     if (res.length >= 0) {
         ctx.body = {
-            data:res.reverse().slice(0,5),
+            data:res.slice(0,5),
             code:200,
             tips:'查询成功',
             total:res.length
