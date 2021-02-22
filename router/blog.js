@@ -128,7 +128,7 @@ blog.get('/recentBlogs', async ctx => {
     const sql = `SELECT a.id,a.title,a.introduce,a.date,a.mdname,a.pageviews,
                  a.content,a.sortId,a.technologyId,b.sort_name,
                  c.technology_name FROM blog a,blog_sort b,blog_technology c 
-                 WHERE a.sortId = b.id and a.technologyId = c.id`
+                 WHERE a.sortId = b.id and a.technologyId = c.id ORDER BY a.date DESC`
     const [res] = await connection.query(sql)
     connection.end((err) => console.log(err))
 
